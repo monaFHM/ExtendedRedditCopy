@@ -1,0 +1,7 @@
+-@post=Post.new
+#userPostForm{:class=>"modal hide"}
+  .modal-header
+    %button{:type=>"button", :class=>"close", :"data-dismiss" => "modal"}="x"
+    %h3="New Post"
+  .modal-body
+    = render 'posts/form'

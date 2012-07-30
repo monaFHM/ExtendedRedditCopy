@@ -1,0 +1,81 @@
+!!!
+%html
+  %head
+    %title>Reddit
+    
+    %meta{:charset => "utf-8"}
+    %meta{:content => "a funny link sharing zone", :name => "description"}
+    %meta{:content => "moi", :name => "author"}    
+    /[if lt IE 9]
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    = stylesheet_link_tag "application", :media => "all"
+    /= stylesheet_link_tag "bootstrap_and_overrides.css"
+    /= stylesheet_link_tag "application.css"
+    = javascript_include_tag "application" 
+    = csrf_meta_tags
+
+    :javascript
+      $(document).ready(function(){
+        $('.navbar').scrollspy();
+      });
+      
+
+  %body{:"data-spy"=>"scroll" , :"data-target"=>"#sidenavi" ,:"data-offset"=>"0"}
+    .navbar.navbar-fixed-top
+      .navbar-inner
+        .container
+          %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand{:href => "#"} Reddit Clone
+          .nav-collapse
+            %ul.nav
+              %li.active
+                = link_to "Home", home_index_path
+              %li
+                = link_to "About", home_about_path
+              %li
+                = link_to "Contact", home_contact_path
+    .container
+      .row
+        .span12        
+          -if notice
+            %div{:class=>"alert alert-success"}
+              %a.close{:"data-dismiss"=>"alert", :href=>"#"}="×"
+              %p=notice
+          -if alert
+            %div{:class=>"alert alert-error"}
+              %a.close{:"data-dismiss"=>"alert", :href=>"#"}="×"
+              %p=alert
+      .row
+        .span3
+          -if user_signed_in?
+            %h3="#{current_user.username}"
+
+          %ul#sidenavi{:class=>"nav nav-list"}
+            %li.nav-header
+              YOUR ACCOUNT
+            -if user_signed_in?
+              %li
+                = link_to "Profile", userprofile_index_path
+              %li
+                = link_to "Account Settings", edit_user_registration_path
+              %li
+                = link_to "Sign out", destroy_user_session_path, :method => "delete"
+            -else
+              %li= link_to "Sign in", new_user_session_path
+              %li= link_to "Sign up", new_user_registration_path
+            %li.divider
+            -if content_for?(:sidebar_menu_items)
+              = yield(:sidebar_menu_items)
+
+        .span9
+          = yield
+      %hr
+      .row
+        .span12
+          %footer
+            %p
+              (C) 2012
+

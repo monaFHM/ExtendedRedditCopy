@@ -1,0 +1,16 @@
+-if posts.length > 0
+  %table{:class=>"table table-striped userpost-table"}
+    %tr
+      %th="Date"
+      %th="Title"
+      %th="Link"
+      %th="User"
+    - posts.each do |p|
+      %tr
+        %td=p.created_at.strftime("%m/%d/%Y %H.%M %p")
+        %td=p.title
+        %td
+          %a{:href=>p.link}=p.link
+        %td=p.user.username
+-else
+  %p="No posts to show"

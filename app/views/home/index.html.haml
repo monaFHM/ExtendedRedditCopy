@@ -1,0 +1,22 @@
+- content_for :sidebar_menu_items do
+  %li.nav-header
+    YOUR ACCOUNT
+  %li
+    %a{:href=>"#valued"}="Important"
+  %li
+    %a{:href=>"#latest"}="Latest"
+  %li
+    %a{:href=>"#liked"}="Liked"
+
+
+-if user_signed_in?
+  =render 'userprofile/newpost_modal'
+  =render 'userprofile/newpost_modal_togglebtn'
+
+.showpost-table
+  %h3#valued.space="Important"
+.showpost-table
+  %h3#latest.space="Latest"      
+  = render 'post_table', :posts => @latest
+.showpost-table
+  %h3#liked.space="Liked"

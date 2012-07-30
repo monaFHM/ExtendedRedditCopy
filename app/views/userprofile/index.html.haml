@@ -1,0 +1,23 @@
+=render 'newpost_modal'
+#userprofile
+  %h1.space="#{current_user.username}s Home"
+
+
+  %h2.space="Your Posts"
+
+  =render 'newpost_modal_togglebtn'
+
+  -if @userposts.length > 0 
+    %table#userposts{:class=>"table table-striped"}
+      %tr
+        %th="Date"
+        %th="Title"
+        %th="Link"
+      - @userposts.each do |p|
+        %tr
+          %td=p.created_at.strftime("%m/%d/%Y %H.%M %p")
+          %td=p.title
+          %td
+            %a{:href=>p.link}=p.link
+  -else
+    %p="You haven't posted anything yet"
