@@ -17,12 +17,12 @@ def random_string
   ('a'..'z').to_a.shuffle[0..7].join
 end
 
+users=[]
+users << (User.create!({:email => "donald@gmail.com", :username=>"daisy" , :password => "111111", :password_confirmation => "111111" })).id
+users << (User.create!({:email => "daisy@gmail.com", :username=>"donald" , :password => "111111", :password_confirmation => "111111" })).id
+users << (User.create!({:email => "guy@gmail.com", :username=>"Guy1234" , :password => "111111", :password_confirmation => "111111" })).id
+users << (User.create!({:email => "anotherguy@gmail.com", :username=>"AnotherGuy5678" , :password => "111111", :password_confirmation => "111111" })).id
 
-u = User.create!({:email => "guy@gmail.com", :username=>"Guy1234" , :password => "111111", :password_confirmation => "111111" })
-u2 = User.create!({:email => "anotherguy@gmail.com", :username=>"AnotherGuy5678" , :password => "111111", :password_confirmation => "111111" })
-20.times do
-  Post.create({:title => (random_string), :link=>'http://www.google.com', :user_id => u.id})
-end
-20.times do
-  Post.create({:title => random_string, :link=>'http://www.youtube.com', :user_id => u2.id})
+45.times do
+  Post.create({:title => random_string, :link=>'http://www.youtube.com', :user_id => users.shuffle.first})
 end

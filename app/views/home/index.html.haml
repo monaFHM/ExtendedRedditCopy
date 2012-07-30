@@ -15,8 +15,10 @@
 
 .showpost-table
   %h3#valued.space="Important"
+  /= render 'post_table', :posts => @latest
 .showpost-table
   %h3#latest.space="Latest"      
   = render 'post_table', :posts => @latest
 .showpost-table
   %h3#liked.space="Liked"
+  = render 'post_table', :posts => @liked

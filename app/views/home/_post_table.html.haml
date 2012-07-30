@@ -1,16 +1,26 @@
 -if posts.length > 0
-  %table{:class=>"table table-striped userpost-table"}
-    %tr
-      %th="Date"
-      %th="Title"
-      %th="Link"
-      %th="User"
+  %table{:class=>"table"}
     - posts.each do |p|
       %tr
+        %td=p.get_voting_value
+        %td=render 'votes/voting', :post => p
         %td=p.created_at.strftime("%m/%d/%Y %H.%M %p")
-        %td=p.title
-        %td
-          %a{:href=>p.link}=p.link
         %td=p.user.username
--else
+        %td
+          %a.icon-play{:href=>p.link, :target=>"_blank"}="  #{ p.title}"
+        %td
+          %div{:class=>"btn icon-comment", :onclick=>"javascript: $('#comments_div_#{p.id}').show()"}="  #{p.comments.count} Comments"
+        %td
+          - if can? :manage, p
+            = link_to t('.edit', :default => t("helpers.links.edit")), edit_post_path(p), :class => 'btn btn-mini'
+            = link_to t('.destroy', :default => t("helpers.links.destroy")), post_path(p), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'
+      %tr
+        %td{:colspan=>'7'}
+          %div{:id=>"comments_div_#{p.id}", :class=>"hide space"}
+            =render 'comments/show_comments', :comments => p.comments
+            -@comment = Comment.new
+            -if can? :create, @comment
+              = render 'comments/form', :post => p
+
+  -else
   %p="No posts to show"

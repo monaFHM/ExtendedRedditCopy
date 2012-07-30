@@ -16,7 +16,6 @@ describe "Home Index" do
             #5 content rows + 1 header row
             page.should have_selector('table tr', :count => 6)
           else
-             #5 content rows + 1 header row
           page.should_not have_selector('table tr')
          end      
       end

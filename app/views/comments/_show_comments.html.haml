@@ -1,0 +1,6 @@
+-comments.each do |c|
+  %p
+    ="#{c.created_at.strftime("%m/%d/%Y %H.%M %p")} #{c.user.username}"
+    %br
+    %blockquote=c.text
+

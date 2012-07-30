@@ -1,4 +1,8 @@
 Reddit::Application.routes.draw do
+  resources :votes
+
+  resources :comments
+
   get "userprofile/index"
 
   get "home/index"

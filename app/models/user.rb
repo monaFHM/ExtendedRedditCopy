@@ -13,4 +13,5 @@ class User < ActiveRecord::Base
   validates :username, :email, :uniqueness => true
 
   has_many :posts
+  has_many :votes
 end
