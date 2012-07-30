@@ -11,7 +11,7 @@ class Post < ActiveRecord::Base
 
   def Post.get_most_liked(quantity)
     posts=Post.all
-    posts.sort!{ |a,b| a.get_voting_value <=> b.get_voting_value }[0...quantity]
+    posts.sort!{ |a,b| b.get_voting_value <=> a.get_voting_value }[0...quantity]
   end
 
   def Post.get_recent_valued(quantity)
