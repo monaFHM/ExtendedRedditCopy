@@ -7,7 +7,6 @@ class Post < ActiveRecord::Base
   has_many :comments
   validates :title, :link, :presence => true
 
-  #COMMENT: Is in general more of a scope than a "method"
   def Post.get_latest(quantity)
     Post.order("created_at DESC").limit(quantity)
   end
@@ -33,8 +32,6 @@ class Post < ActiveRecord::Base
   # to your first post to keep the numbers smaller. This is, I think,
   # reddit's own epoch.
   $our_epoch = Time.local(2012, 12, 7, 7, 46, 43).to_time
-  #COMMENT: As almost a general rule we try not to use global variables as they
-  #break encapsulation and may provoke naming conflicts.
 
 
   def Post.epoch_seconds(t)
@@ -43,7 +40,6 @@ class Post < ActiveRecord::Base
 
 
   # date is a ruby Time
-  #COMMENT: This may also make sense as an instance method.
   def Post.hot(ups, downs, date)
       s = ups - downs
       displacement = Math.log( [s.abs, 1].max, 10 )
@@ -60,19 +56,14 @@ class Post < ActiveRecord::Base
   end 
   
 
-  #COMMENT: get_... is Java-Speak
-  #You can simply use "ups" or something more descriptive
-  #as a method name
   def get_ups()
     self.votes.where(:up_or_down => true).count
   end
 
-  #COMMENT: Same applies here.
   def get_downs()
     self.votes.where(:up_or_down => false).count
   end
 
-  #COMMENT: Same applies here.
   def get_voting_value()
     pro = get_ups
     contra = get_downs

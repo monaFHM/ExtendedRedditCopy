@@ -1,8 +1,4 @@
-= form_for post.comments.build, :html => {:class=>"post-comment-form"} do |f|
-  -#COMMENT: This is NOT safe - users can change the value in the browser
-  -#and then comment as someone else.
-  -# You could build a safeguard into posts_controller#create or utilize
-  -# CanCan (recommended)
+= form_for @comment, :html => {:class=>"post-comment-form"} do |f|
   = f.hidden_field :user_id, :value => current_user.id
   = f.hidden_field :post_id, :value => post.id
   = f.text_field :text, :class => 'text_field'

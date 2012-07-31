@@ -19,8 +19,6 @@
         %td{:colspan=>'7'}
           %div{:id=>"comments_div_#{p.id}", :class=>"hide space"}
             =render 'comments/show_comments', :comments => p.comments
-            - #COMMENT: As long as you don't further use @comment, which is highly unlikely, you can also use can? :create, Comment
-            - #Creating variables in views is a lot of unneeded logic (and overhead if you want to get technical)
             -@comment = Comment.new
             -if can? :create, @comment
               = render 'comments/form', :post => p
