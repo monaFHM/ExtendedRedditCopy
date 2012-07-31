@@ -1,3 +1,5 @@
+require 'date'
+
 class Post < ActiveRecord::Base
   attr_accessible :link, :title, :user_id
   belongs_to :user
@@ -15,13 +17,56 @@ class Post < ActiveRecord::Base
   end
 
   def Post.get_recent_valued(quantity)
+    posts=Post.all
+    posts.sort!{ |a,b| b.hot(b.get_ups, b.get_downs, b.created_at) <=> a.hot(a.get_ups, a.get_downs, a.created_at)}[0...quantity]
   end
 
 
-  def get_voting_value()
-    pro = self.votes.where(:up_or_down => true).count
-    contra = self.votes.where(:up_or_down => false).count
+  # Source : https://gist.github.com/2636355
+  # http://bibwild.wordpress.com/2012/05/08/reddit-story-ranking-algorithm/
 
+  # Actually doesn't matter WHAT you choose as the epoch, it
+  # won't change the algorithm. Just don't change it after you
+  # have cached computed scores. Choose something before your first
+  # post to avoid annoying negative numbers. Choose something close
+  # to your first post to keep the numbers smaller. This is, I think,
+  # reddit's own epoch.
+  $our_epoch = Time.local(2012, 12, 7, 7, 46, 43).to_time
+
+
+  def epoch_seconds(t)
+    (t.to_i - $our_epoch.to_i).to_f
+  end
+
+
+  # date is a ruby Time
+  def hot(ups, downs, date)
+      s = ups - downs
+      displacement = Math.log( [s.abs, 1].max, 10 )
+
+      sign = if s > 0
+        1
+      elsif s < 0
+        -1
+      else
+        0
+      end
+
+      return (displacement * sign.to_f) + ( epoch_seconds(date) / 45000 )
+  end 
+  
+
+  def get_ups()
+    self.votes.where(:up_or_down => true).count
+  end
+
+  def get_downs()
+    self.votes.where(:up_or_down => false).count
+  end
+
+  def get_voting_value()
+    pro = get_ups
+    contra = get_downs
     pro-contra
   end
 

@@ -1,6 +1,6 @@
 - content_for :sidebar_menu_items do
   %li.nav-header
-    YOUR ACCOUNT
+    SHOWCASE
   %li
     %a{:href=>"#valued"}="Important"
   %li
@@ -15,10 +15,25 @@
 
 .showpost-table
   %h3#valued.space="Important"
-  /= render 'post_table', :posts => @latest
+  = render 'post_table', :posts => @valued
 .showpost-table
   %h3#latest.space="Latest"      
   = render 'post_table', :posts => @latest
 .showpost-table
   %h3#liked.space="Liked"
   = render 'post_table', :posts => @liked
+
+/ .showpost-table
+/   %h3="Important"
+/   = render 'post_table', :posts => @valued
+/ .showpost-table
+/   %h3="Latest"      
+/   = render 'post_table', :posts => @latest
+/ .showpost-table
+/   %h3="Liked"
+/   = render 'post_table', :posts => @liked
+
+/ = render 'post_table', :posts => @valued
+/ = render 'post_table', :posts => @latest
+/ %h3="Liked"
+/ = render 'post_table', :posts => @liked

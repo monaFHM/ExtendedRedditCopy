@@ -14,4 +14,11 @@ class User < ActiveRecord::Base
 
   has_many :posts
   has_many :votes
+
+
+  def can_vote?(post_id)
+    qty = Vote.where(:post_id => post_id, :user_id => self.id).count
+    return false if qty > 0
+    true
+  end
 end
