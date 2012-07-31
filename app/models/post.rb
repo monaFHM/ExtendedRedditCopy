@@ -18,7 +18,7 @@ class Post < ActiveRecord::Base
 
   def Post.get_recent_valued(quantity)
     posts=Post.all
-    posts.sort!{ |a,b| b.hot(b.get_ups, b.get_downs, b.created_at) <=> a.hot(a.get_ups, a.get_downs, a.created_at)}[0...quantity]
+    posts.sort!{ |a,b| Post.hot(b.get_ups, b.get_downs, b.created_at) <=> Post.hot(a.get_ups, a.get_downs, a.created_at)}[0...quantity]
   end
 
 
@@ -34,13 +34,13 @@ class Post < ActiveRecord::Base
   $our_epoch = Time.local(2012, 12, 7, 7, 46, 43).to_time
 
 
-  def epoch_seconds(t)
+  def Post.epoch_seconds(t)
     (t.to_i - $our_epoch.to_i).to_f
   end
 
 
   # date is a ruby Time
-  def hot(ups, downs, date)
+  def Post.hot(ups, downs, date)
       s = ups - downs
       displacement = Math.log( [s.abs, 1].max, 10 )
 

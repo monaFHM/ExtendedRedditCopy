@@ -5,22 +5,20 @@ describe "Home Index" do
     describe "for both unregistered and registered Users" do
 
       before :each do
+        visit '/home/index'
       end
 
-      it "shows the 5 highest ratest Links"
-      
-      it "shows the 5 latest Links" do
-
-          visit '/home/index'
-          if Post.count > 5
-            #5 content rows + 1 header row
-            page.should have_selector('table tr', :count => 6)
-          else
-          page.should_not have_selector('table tr')
-         end      
+      it "shows the highest ratest Links" do        
+        page.should have_selector('#post-liked-table')         
       end
       
-      it "shows the 20 highest valued Links"
+      it "shows the  latest Links" do        
+        page.should have_selector('#post-latest-table')         
+      end
+      
+      it "shows the highest valued Links" do
+        page.should have_selector('#post-latest-table')
+      end
     
     end
 end

@@ -29,9 +29,10 @@ describe "UserContent" do
 
         visit '/userprofile/index'
         if quant == 0
-          page.should have_content("You haven't posted anything yet")
+          page.should have_content("No posts to show")
         else
-          page.has_selector("table#userposts")
+          page.has_selector("post-indextable")
+          page.has_selector("td", :count => 2*quant)
         end
       end
 

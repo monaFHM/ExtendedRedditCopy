@@ -1,5 +1,5 @@
 -if posts.length > 0
-  %table{:class=>"table"}
+  %table{:class=>"table post-indextable"}
     - posts.each do |p|
       %tr
         %td=p.get_voting_value
@@ -13,6 +13,7 @@
         %td
           - if can? :manage, p
             = link_to t('.edit', :default => t("helpers.links.edit")), edit_post_path(p), :class => 'btn btn-mini'
+            /this generated stuff raises an Deprecated Error ? WTF?
             = link_to t('.destroy', :default => t("helpers.links.destroy")), post_path(p), :method => :delete, :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')), :class => 'btn btn-mini btn-danger'
       %tr
         %td{:colspan=>'7'}

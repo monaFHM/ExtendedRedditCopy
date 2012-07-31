@@ -39,7 +39,7 @@
                 = link_to "Contact", home_contact_path
     .container
       .row
-        .span12        
+        .span10.offset2        
           -if notice
             %div{:class=>"alert alert-success"}
               %a.close{:"data-dismiss"=>"alert", :href=>"#"}="×"
@@ -49,7 +49,7 @@
               %a.close{:"data-dismiss"=>"alert", :href=>"#"}="×"
               %p=alert
       .row
-        .span2
+        .span2.sidebar-nav-fixed
           -if user_signed_in?
             %h3="#{current_user.username}"
 
@@ -70,7 +70,7 @@
             -if content_for?(:sidebar_menu_items)
               = yield(:sidebar_menu_items)
 
-        .span10
+        .span10.offset2
           = yield
       .row
         .span12

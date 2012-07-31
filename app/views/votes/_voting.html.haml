@@ -1,23 +1,22 @@
 -if user_signed_in? && current_user.can_vote?(post.id)
+  .post-voting-tools
+    - form_id = "vote_for_#{post.id}"
+    - text_id = "value_for_#{post.id}"
+    - signature ="javascript: submit_vote('#{form_id}','#{text_id}',"
+    /- signature ="say("
 
+    %div{:class =>"icon-chevron-up btn left", :onclick=>"#{signature}'1')"}
+    %div{:class=>"icon-chevron-down btn left", :onclick=>"#{signature}'0')"}
 
-  - form_id = "vote_for_#{post.id}"
-  - text_id = "value_for_#{post.id}"
-  - signature ="javascript: submit_vote('#{form_id}','#{text_id}',"
-  /- signature ="say("
+    :javascript
+      function submit_vote(form_id, text_id, value){
+        $('#'+text_id).val(value);
+        $('#'+form_id).submit();
+      }
 
-  %div{:class =>"icon-chevron-up btn left", :onclick=>"#{signature}'1')"}
-  %div{:class=>"icon-chevron-down btn left", :onclick=>"#{signature}'0')"}
-
-  :javascript
-    function submit_vote(form_id, text_id, value){
-      $('#'+text_id).val(value);
-      $('#'+form_id).submit();
-    }
-
-  -@vote=Vote.new
-  = form_for @vote, :html => { :class => 'form-horizontal', :id => form_id} do |f|
-    = f.hidden_field :post_id, :value => post.id
-    = f.hidden_field :user_id, :value => current_user.id
-    = f.hidden_field :up_or_down, :id=> text_id,:value => '0'
+    -@vote=Vote.new
+    = form_for @vote, :html => { :class => 'form-horizontal', :id => form_id} do |f|
+      = f.hidden_field :post_id, :value => post.id
+      = f.hidden_field :user_id, :value => current_user.id
+      = f.hidden_field :up_or_down, :id=> text_id,:value => '0'
 
