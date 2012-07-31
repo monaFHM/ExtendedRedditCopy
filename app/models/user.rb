@@ -14,8 +14,11 @@ class User < ActiveRecord::Base
 
   has_many :posts
   has_many :votes
+  #COMMENT: Shouldn't the user also have has_many :comments
 
 
+  #COMMENT: Another way to ensure that there are no dobule votes
+  #is to use "validates uniqueness of" in the vote model.
   def can_vote?(post_id)
     qty = Vote.where(:post_id => post_id, :user_id => self.id).count
     return false if qty > 0

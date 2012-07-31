@@ -1,5 +1,8 @@
 -if user_signed_in? && current_user.can_vote?(post.id)
   .post-voting-tools
+    -#COMMENT: This is workin well and is almost the correct approach.
+    -#But: we don't want to mix our Javascript and HTML if it can be separated
+    -#cleaner while enforcing semantic markup. Have a look at http://de.wikipedia.org/wiki/Unobtrusive_JavaScript and especially http://railscasts.com/episodes/205-unobtrusive-javascript?language=de&view=asciicast
     - form_id = "vote_for_#{post.id}"
     - text_id = "value_for_#{post.id}"
     - signature ="javascript: submit_vote('#{form_id}','#{text_id}',"
@@ -14,8 +17,8 @@
         $('#'+form_id).submit();
       }
 
-    -@vote=Vote.new
-    = form_for @vote, :html => { :class => 'form-horizontal', :id => form_id} do |f|
+    - #COMMENT: Either instantiate this in the controller or simply use a symbol (":vote") instead of ("@vote") or post.votes.build
+    = form_for :vote, :html => { :class => 'form-horizontal', :id => form_id} do |f|
       = f.hidden_field :post_id, :value => post.id
       = f.hidden_field :user_id, :value => current_user.id
       = f.hidden_field :up_or_down, :id=> text_id,:value => '0'
